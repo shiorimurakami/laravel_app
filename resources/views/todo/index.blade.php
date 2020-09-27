@@ -7,6 +7,7 @@
 <table class="table">
   <thead class="thead-light">
     <tr>
+      <th>ID</th>
       <th>やること</th>
       <th>作成日時</th>
       <th>更新日時</th>
@@ -17,7 +18,8 @@
   <tbody>
     @foreach ($todos as $todo)
       <tr>
-      <td class="align-middle">{{ $todo->title }}</td>
+      <td class="align-middle">{{ $todo->id }}</td>
+        <td class="align-middle">{{ $todo->title }}</td>
         <td class="align-middle">{{ $todo->created_at }}</td>
         <td class="align-middle">{{ $todo->updated_at }}</td>
         <td><a class="btn btn-primary" href="{{ route('todo.edit', $todo->id) }}">編集</a></td>
