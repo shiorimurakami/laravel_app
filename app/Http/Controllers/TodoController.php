@@ -58,7 +58,7 @@ class TodoController extends Controller //Controller classを継承した
         //$input['test'] = 'hoge';
         $input['user_id'] = Auth::id();  // 追記
         $this->todo->fill($input)->save();
-        return redirect()->to('todo');
+        return redirect()->route('todo.index');
         //redirect関数で取得したリダイレクタインスタンスにパスを指定
     }
 
@@ -97,7 +97,7 @@ class TodoController extends Controller //Controller classを継承した
         $input = $request->all();
         //dd($this->todo->find($id)->fill($input));
         $this->todo->find($id)->fill($input)->save();
-        return redirect()->to('todo');
+        return redirect()->route('todo.index');
     }
 
     /**
@@ -109,6 +109,6 @@ class TodoController extends Controller //Controller classを継承した
     public function destroy($id)
     {
         $this->todo->find($id)->delete();
-        return redirect()->to('todo');
+        return redirect()->route('todo.index');
     }
 }
