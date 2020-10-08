@@ -6,14 +6,13 @@ use Illuminate\Http\Request;
 use App\Todo;
 use Auth;
 
-class TodoController extends Controller //Controller classを継承した
+class TodoController extends Controller
 {
-    private $todo; //同じクラスの中でのみアクセス可能。非公開で継承クラスからもアクセス不可能。
+    private $todo;
 
     public function __construct(Todo $instanceClass)
     {
-        $this->middleware('auth');  // 追記
-        //dd($this->middleware('auth'));
+        $this->middleware('auth');
         $this->todo = $instanceClass;
     }
 
@@ -24,13 +23,12 @@ class TodoController extends Controller //Controller classを継承した
      */
     public function index()
     {
+        //dd(Auth::id());
         $todos = $this->todo->all();
-        //dd($todos);
         //= SELECT * FROM todos;
-        $todos = $this->todo->getByUserId(Auth::id());  // 追記
-        return view('todo.index', ['todos'=>$todos]);
-
-        //2：ビューで使用するデータの配列
+        $todos = $this->todo->getByUserId(Auth::id());
+        $user = Auth::user();
+        return view('todo.index', ['todos'=>$todos, 'user'=>$user]);
     }
 
     /**
@@ -56,7 +54,7 @@ class TodoController extends Controller //Controller classを継承した
         $input = $request->all();
         //dd($input);
         //$input['test'] = 'hoge';
-        $input['user_id'] = Auth::id();  // 追記
+        $input['user_id'] = Auth::id();
         $this->todo->fill($input)->save();
         return redirect()->route('todo.index');
         //redirect関数で取得したリダイレクタインスタンスにパスを指定
